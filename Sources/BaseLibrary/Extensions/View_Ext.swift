@@ -46,6 +46,13 @@ extension View {
             .background(TransparentBackground())
         }
     }
+    
+    public func fontWithLineHeight(size: CGFloat, weight: Font.Weight, lineHeight: CGFloat) -> some View {
+        self
+            .font(.system(size: size, weight: weight))
+            .lineSpacing((lineHeight - size) / 2)
+            .padding(.vertical, (lineHeight - size) / 2)
+    }
 }
 
 struct RoundedCorner: Shape {
