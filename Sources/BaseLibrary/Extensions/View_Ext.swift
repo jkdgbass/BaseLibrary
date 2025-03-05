@@ -10,19 +10,19 @@ import SwiftUI
 
 extension View {
     
-    func onBottomSheet<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: (() -> Content)) -> some View {
+    public func onBottomSheet<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: (() -> Content)) -> some View {
         modifier(AdaptiveSheetModifier(isPresented: isPresented, sheetContent: content))
     }
     
-    func onDialog<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: (() -> Content)) -> some View {
+    public func onDialog<Content: View>(isPresented: Binding<Bool>, @ViewBuilder content: (() -> Content)) -> some View {
         modifier(DialogModifier(isPresented: isPresented, dialogContent: content))
     }
     
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+    public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
     
-    func endEditing() {
+    public func endEditing() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
