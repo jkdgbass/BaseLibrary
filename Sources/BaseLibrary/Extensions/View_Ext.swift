@@ -25,6 +25,27 @@ extension View {
     public func endEditing() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
+    
+    @ViewBuilder public func isHidden(_ hidden: Bool, remove: Bool = true) -> some View {
+        if hidden {
+            if remove {
+                EmptyView()
+            } else {
+                self.hidden()
+            }
+        } else {
+            self
+        }
+    }
+    
+    public func transparentFullScreenCover<Content: View>(isPresented: Binding<Bool>, content: @escaping () -> Content) -> some View {
+        fullScreenCover(isPresented: isPresented) {
+            ZStack {
+                content()
+            }
+            .background(TransparentBackground())
+        }
+    }
 }
 
 struct RoundedCorner: Shape {
@@ -105,4 +126,16 @@ struct DialogModifier<DialogContent: View>: ViewModifier {
                 .ignoresSafeArea(.all)
         }
     }
+}
+
+struct TransparentBackground: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            view.superview?.superview?.backgroundColor = .clear
+        }
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
 }
